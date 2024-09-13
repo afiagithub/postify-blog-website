@@ -11,15 +11,17 @@ const SignIn = () => {
     setShow(!show);
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    const res = signIn('credentials', {
+    const res = await signIn('credentials', {
       email,
       password,
       redirect: false,
     });
+    console.log(res);
+    
   }
   return (
     <div className="flex flex-col max-w-md mx-auto p-6 rounded-md sm:p-10 mb-10">
