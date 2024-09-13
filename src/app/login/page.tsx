@@ -1,6 +1,7 @@
 "use client"
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { FaEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
@@ -11,6 +12,8 @@ const SignIn = () => {
     setShow(!show);
   }
 
+  const router = useRouter()
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -20,7 +23,9 @@ const SignIn = () => {
       password,
       redirect: false,
     });
-    console.log(res);
+    if(res.status === 200){
+      router.push('/')
+    }
     
   }
   return (
