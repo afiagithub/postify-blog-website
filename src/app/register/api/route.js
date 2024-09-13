@@ -10,7 +10,8 @@ export const POST = async (request) => {
         if(isExist){
             return Response.json({message: 'User Already Exists'}, {status: 304} )
         }
-        const resp = await userCollection.insertOne(newUser)
+        const hashedPass = bcrypt.hashSync(newUser.password, 14)
+        const resp = await userCollection.insertOne({...newUser, password: hashedPass})
         return Response.json({message: 'User Created'}, {status: 200} )
     } catch (error) {
         return Response.json({message: 'Something went wrong', error}, {status: 500} )

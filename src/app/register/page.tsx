@@ -43,7 +43,6 @@ const SignUp = () => {
             image,
             password
         }
-        console.log(newUser);
         const res = await fetch('http://localhost:3000/register/api', {
             method: 'POST',
             body: JSON.stringify(newUser),
@@ -53,7 +52,9 @@ const SignUp = () => {
         })
 
         console.log(res);
-        
+        if(res.status === 200){
+            event.target.reset()
+        }       
         
     }
     return (

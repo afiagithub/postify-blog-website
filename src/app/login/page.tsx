@@ -1,4 +1,5 @@
 "use client"
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useState } from 'react'
 import { FaEyeSlash } from "react-icons/fa";
@@ -11,7 +12,14 @@ const SignIn = () => {
   }
 
   const handleSubmit = (event: any) => {
-    event.preventDefault();    
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const res = signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
   }
   return (
     <div className="flex flex-col max-w-md mx-auto p-6 rounded-md sm:p-10 mb-10">
@@ -23,14 +31,14 @@ const SignIn = () => {
         <div className="space-y-4">
           <div>
             <label className="block mb-2 text-sm">Email address</label>
-            <input type="email" name="email" placeholder="leroy@jenkins.com"
+            <input type="email" name="email" placeholder="Your Email" required
               className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800" />
           </div>
           <div className="relative">
             <div className="flex justify-between mb-2">
               <label className="text-sm">Password</label>
             </div>
-            <input type={show ? "text" : "password"} name="password" placeholder="*****"
+            <input type={show ? "text" : "password"} name="password" placeholder="*****" required
               className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800" />
             <div className="absolute top-10 right-4 text-lg" onClick={handleToggle}>
               {show ? <FaEyeSlash /> : <FaRegEye />}
