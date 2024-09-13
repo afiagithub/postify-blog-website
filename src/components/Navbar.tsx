@@ -1,11 +1,23 @@
-import React from 'react'
+"use client"
+import { signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 const Navbar = () => {
+    const links = <>
+        <li className="bg-transparent mx-2 font-bold"><Link href={'/'}>Home</Link></li>
+        <li className="bg-transparent mx-2 font-bold"><Link href={"/tending"}>Trending</Link></li>
+        <li className="bg-transparent mx-2 font-bold"><Link href={"/category"}>Categories</Link></li>
+        <li className="bg-transparent mx-2 font-bold"><Link href={"/about"}>About Us</Link></li>
+        <li className="bg-transparent mx-2 font-bold"><Link href={"/contact"}>Contact</Link></li>
+    </>
+    const session = useSession();
+    console.log(session);
+    
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 py-5">
             <div className="navbar-start">
                 <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                    <div tabIndex={0} role="buthrefn" className="btn btn-ghost lg:hidden">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5"
@@ -22,36 +34,21 @@ const Navbar = () => {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li><a>Item 1</a></li>
-                        <li>
-                            <a>Parent</a>
-                            <ul className="p-2">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a>Item 3</a></li>
+                        {links}
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl">daisyUI</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a>Item 1</a></li>
-                    <li>
-                        <details>
-                            <summary>Parent</summary>
-                            <ul className="p-2">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
-                            </ul>
-                        </details>
-                    </li>
-                    <li><a>Item 3</a></li>
+                    {links}
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {
+                    session.data? <button onClick={() => signOut()} className='btn btn-outline'>LogOut</button>: 
+                    <Link href={'/api/auth/signin'} className='btn btn-outline'>Login</Link>
+                }
             </div>
         </div>
     )
