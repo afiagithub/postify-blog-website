@@ -4,17 +4,17 @@ import Link from 'next/link'
 
 const Navbar = () => {
     const links = <>
-        <li className="bg-transparent mx-2 font-bold"><Link href={'/'}>Home</Link></li>
-        <li className="bg-transparent mx-2 font-bold"><Link href={"/tending"}>Trending</Link></li>
-        <li className="bg-transparent mx-2 font-bold"><Link href={"/category"}>Categories</Link></li>
-        <li className="bg-transparent mx-2 font-bold"><Link href={"/about"}>About Us</Link></li>
-        <li className="bg-transparent mx-2 font-bold"><Link href={"/contact"}>Contact</Link></li>
+        <li className="bg-transparent mx-2 font-bold"><a href={'/'} className='text-[#F59E0B]'>Home</a></li>
+        <li className="bg-transparent mx-2 font-bold"><a href={"/tending"}>Trending</a></li>
+        <li className="bg-transparent mx-2 font-bold"><a href={"/category"}>Categories</a></li>
+        <li className="bg-transparent mx-2 font-bold"><a href={"/about"}>About Us</a></li>
+        <li className="bg-transparent mx-2 font-bold"><a href={"/contact"}>Contact</a></li>
     </>
     const session = useSession();
     console.log(session);
     
     return (
-        <div className="navbar bg-base-100 py-5">
+        <div className="navbar bg-[#1F2937] py-5 px-6 lg:px-10 text-[#F59E0B]">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="buthrefn" className="btn btn-ghost lg:hidden">
@@ -33,11 +33,11 @@ const Navbar = () => {
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-[#F59E0B]">
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">daisyUI</a>
+                <Link href={'/'} className="btn btn-ghost text-xl">Postify</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -46,8 +46,12 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
                 {
-                    session.data? <button onClick={() => signOut()} className='btn btn-outline'>LogOut</button>: 
-                    <Link href={'/api/auth/signin'} className='btn btn-outline'>Login</Link>
+                    session.data? <button onClick={() => signOut()} className='btn bg-[#F59E0B] text-[#1F2937] text-lg font-semibold rounded-xl 
+                            border-2 border-[#1F2937] hover:border-[#F59E0B] hover:bg-transparent 
+                            hover:text-[#F59E0B]'>LogOut</button>: 
+                    <Link href={'/login'} className='btn bg-[#F59E0B] text-[#1F2937] text-lg font-semibold rounded-xl 
+                            border-2 border-[#1F2937] hover:border-[#F59E0B] hover:bg-transparent 
+                            hover:text-[#F59E0B]'>Login</Link>
                 }
             </div>
         </div>

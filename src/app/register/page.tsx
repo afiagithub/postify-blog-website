@@ -6,21 +6,27 @@ import { FaRegEye } from "react-icons/fa";
 import { toast } from 'react-toastify';
 
 const SignUp = () => {
+    interface User {
+        name: string;
+        email: string;
+        image?: string;
+        password: string;
+    }
     const [show, setShow] = useState(false);
     const handleToggle = () => {
         setShow(!show);
     }
 
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         const name = event.target.name.value;
         const email = event.target.email.value;
-        const photo = event.target.photo.value;
+        const image = event.target.photo.value;
         const password = event.target.password.value;
-        const conPass = event.target.conpass.value;
+        const conPass = event.target.conpass.value;      
         if (password.length < 6) {
             toast.error("Password must be at least 6 characters long");
-            // return;
+            return;
         }
         else if(!/^(?=.*[a-z])(?=.*[A-Z]).+$/.test(password)){
             toast.error("Password must have a uppercase and a lowercase letter");
@@ -30,36 +36,55 @@ const SignUp = () => {
             toast.error("Password does not match Confirm Password");
             return;
         }
+
+        const newUser: User = {
+            name,
+            email,
+            image,
+            password
+        }
+        console.log(newUser);
+        const res = await fetch('http://localhost:3000/register/api', {
+            method: 'POST',
+            body: JSON.stringify(newUser),
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+
+        console.log(res);
+        
+        
     }
     return (
         <div className="flex flex-col max-w-md mx-auto p-6 rounded-md sm:p-10 mb-10">
             <div className="mb-8 text-center">
-                <h1 className="my-3 text-4xl font-bold text-[#F59E0B]">Register</h1>
+                <h1 className="lg:mt-3 mb-3 text-4xl font-bold text-[#F59E0B]">Register</h1>
                 <p className="text-sm dark:text-[#1F2937]">Create your account</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-12">
                 <div className="space-y-4">
                     <div>
                         <label className="block mb-2 text-sm">Full Name</label>
-                        <input type="text" name="name" placeholder="Leroy Jenkins"
+                        <input type="text" name="name" placeholder="Your Name" required
                             className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800" />
                     </div>
                     <div>
                         <label className="block mb-2 text-sm">Email address</label>
-                        <input type="email" name="email" placeholder="leroy@jenkins.com"
+                        <input type="email" name="email" placeholder="Your Email" required
                             className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800" />
                     </div>
                     
                     <div>
                         <label className="block mb-2 text-sm">Photo URL</label>
-                        <input type="text" name="photo"
+                        <input type="text" name="photo" placeholder='Your Photo URL'
                             className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800" />
                     </div>
                     <div className="relative">
                         <div className="flex justify-between mb-2">
                             <label className="text-sm">Password</label>
                         </div>
-                        <input type={show ? "text" : "password"} name="password" placeholder="*****"
+                        <input type={show ? "text" : "password"} name="password" placeholder="*****" required
                             className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800" />
                         <div className="absolute top-10 right-4 text-lg" onClick={handleToggle}>
                             {show ? <FaEyeSlash /> : <FaRegEye />}
@@ -70,7 +95,7 @@ const SignUp = () => {
                         <div className="flex justify-between mb-2">
                             <label className="text-sm">Confirm Password</label>
                         </div>
-                        <input type="password" name="conpass" placeholder="*****"
+                        <input type="password" name="conpass" placeholder="*****" required
                             className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800" />
                     </div>
                     
