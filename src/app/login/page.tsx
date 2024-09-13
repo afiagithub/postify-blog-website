@@ -1,4 +1,5 @@
 "use client"
+import SocialLogin from '@/components/SocialLogin';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -66,6 +67,8 @@ const SignIn = () => {
           </p>
         </div>
       </form>
+
+      <SocialLogin></SocialLogin>
 
     </div>
   )
