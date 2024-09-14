@@ -70,9 +70,14 @@ const Navbar = () => {
                             w-52 p-2 shadow space-y-2 text-[#1F2937]">
                             <li className='font-semibold'>Hello, <span className='text-[#F59E0B]'>{session?.data?.user?.name}</span></li>
                             <li>
-                                <a className="justify-between font-semibold">
+                                <Link href={'/createblog'} className="justify-between font-semibold">
+                                    Create New Blog
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={'/myblogs'} className="justify-between font-semibold">
                                     My Blog Posts
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a className="justify-between font-semibold">

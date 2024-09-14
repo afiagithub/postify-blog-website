@@ -9,3 +9,9 @@ export const getBlogDetails = async (id) => {
     const data = await res.json();
     return data;
 }
+
+export const getMyBlogs = async (email) => {
+    const res = await fetch(`http://localhost:3000/blogs/api/${email}`)
+    const data = await res.json();
+    return data;
+}

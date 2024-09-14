@@ -13,33 +13,5 @@ export const middleware = async (request) => {
 }
 
 export const config = {
-    matcher: ['/about'],
+    matcher: ['/createblog'],
 }
-
-
-
-
-// export const middleware = (request) => {
-//   return NextResponse.rewrite(new URL('/about/mission', request.url))
-// }
-
-// export const config = {
-//   matcher: '/about',
-// }
-
-
-
-
-// const user = false;
-
-// export const middleware = (request) => {
-//   const cookies = request.cookies.get('token')
-//   if(!cookies){
-//     return NextResponse.redirect(new URL('/login', request.url))
-//   }
-//   return NextResponse.next()
-// }
-
-// export const config = {
-//   matcher: ['/dashboard', '/services'],
-// }
