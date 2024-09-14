@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
+import { toast } from 'react-toastify';
 
 interface Blog {
     _id: string;
@@ -22,7 +23,7 @@ const MyBlogPage = () => {
         const res = await fetch(`http://localhost:3000/myblogs/api/${session?.data?.user?.email}`)
         const data = await res.json();
         console.log(data?.myBlogs);
-        
+
         setBlogList(data?.myBlogs)
     }
 
@@ -30,8 +31,12 @@ const MyBlogPage = () => {
         getMyBlogs()
     }, [session])
 
-    const handleDelete = (id: string) => {
-
+    const handleDelete = async (id: string) => {
+        const res = await fetch(`http://localhost:3000/myblogs/api/deleteblog/${id}`)
+        console.log(res);
+        if(res.status === 200){
+            toast.success("Hurrah")
+        }        
     }
     return (
         <div className="z-0 mt-10 px-10 md:px-0 max-w-6xl mx-auto">
