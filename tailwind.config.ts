@@ -12,6 +12,12 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        robo: ['"Roboto"', "sans-serif"],
+        rale: ['"Raleway"', "sans-serif"],
+        play: ['"Playfair Display"', "serif"],
+        // Add more custom font families as needed
+      },
     },
   },
   plugins: [require('daisyui'),],

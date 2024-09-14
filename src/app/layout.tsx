@@ -32,7 +32,7 @@ export default function RootLayout({
     <html lang="en" data-theme='light'>
       <AuthProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`} data-theme='light'
+          className={`${geistSans.variable} ${geistMono.variable} antialiased font-rale`} data-theme='light'
         >
           <Navbar />
           <ToastContainer />

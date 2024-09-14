@@ -11,6 +11,7 @@ export const POST = async (request) => {
             return Response.json({message: 'User Already Exists'}, {status: 304} )
         }
         const hashedPass = bcrypt.hashSync(newUser.password, 14)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const resp = await userCollection.insertOne({...newUser, password: hashedPass})
         return Response.json({message: 'User Created'}, {status: 200} )
     } catch (error) {
