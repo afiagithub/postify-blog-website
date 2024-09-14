@@ -3,6 +3,11 @@ import Image from 'next/image';
 import React from 'react'
 import { IoIosBookmark } from "react-icons/io";
 
+export const metadata = {
+    title: "Details",
+    description: "Blog Details Page"
+}
+
 const BlogDetails = async ({ params }: { params: { id: string } }) => {
     const blog = await getBlogDetails(params.id);
     const { title, thumbnail, blog_content, post_date, category, tags, author_name, author_image } = blog.blog;
