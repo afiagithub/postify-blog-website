@@ -4,12 +4,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 const CreateBlog = () => {
     const session = useSession();
     const [startDate, setStartDate] = useState(new Date());
 
-    const handleAdd = (event: any) => {
+    const handleAdd = async (event: any) => {
         event.preventDefault();
         const form = event.target;
         const title = form.title.value;
@@ -27,12 +28,23 @@ const CreateBlog = () => {
             post_date: moment(startDate).format('YYYY-MM-DD'),
             author_name: session?.data?.user?.name,
             author_email: session?.data?.user?.email,
-            author_image: session?.data?.user?.image,
+            author_image: session?.data?.user?.image || 'https://i.ibb.co.com/QnTrVRz/icon.jpg',
             comment_count: 0,
             tags: tags.split(","),
             blog_content,
         }
         console.log(newBlogData);
+
+        const res = await fetch('http://localhost:3000/blogs/api/create-post', {
+            method: 'POST',
+            body: JSON.stringify(newBlogData),
+            headers: {
+                "content-type": "application/json"
+            }
+        })
+        if(res.status === 200){
+            toast.success('Blog Posted Successfully')
+        }
     }
     return (
         <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">

@@ -5,8 +5,8 @@ export const POST = async (request) => {
     const db = await connenctDB();
     const blogCollection = db.collection('blogs')
     try {        
-        const res = await blogCollection.insertOne({newBlog});
-        return Response.json({ msg: "Blog posted successfully" })
+        const res = await blogCollection.insertOne(newBlog);
+        return Response.json({ msg: "Blog posted successfully" }, {status: 200})
     } catch (error) {
         console.log(error);
     }
