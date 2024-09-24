@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic"
 import Blogs from "@/components/Blogs";
 import Sponsored from "@/components/Sponsored";
 

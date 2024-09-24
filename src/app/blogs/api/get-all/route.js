@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import { connenctDB } from "../../../../lib/connectDB";
 
 export const GET = async () => {
@@ -5,8 +6,8 @@ export const GET = async () => {
         const db = await connenctDB();
         const blogCollection = db.collection('blogs')
         const blogs = await blogCollection.find().toArray();
-        return Response.json({ blogs })
+        return NextResponse.json({ blogs })
     } catch (error) {
-        console.log(error);
+        return NextResponse.json({ msg: "Something went wrong", error })
     }
 }

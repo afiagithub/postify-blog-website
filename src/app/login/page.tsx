@@ -2,7 +2,6 @@
 import SocialLogin from '@/components/SocialLogin';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { FaEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
@@ -13,8 +12,7 @@ const SignIn = () => {
     setShow(!show);
   }
 
-  const router = useRouter()
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -24,9 +22,11 @@ const SignIn = () => {
       password,
       redirect: false,
     });
-    if(res.status === 200){
-      router.push('/')
-    }
+    console.log(res);
+    
+    // if(res.status === 200){
+    //   router.push('/')
+    // }
     
   }
   return (
@@ -61,7 +61,7 @@ const SignIn = () => {
                             border-2 border-[#1F2937] hover:border-[#F59E0B] hover:bg-transparent 
                             hover:text-[#F59E0B]" />
           </div>
-          <p className="px-6 text-sm text-center dark:text-[#1F2937]">Don't have an account?
+          <p className="px-6 text-sm text-center dark:text-[#1F2937]">Don&apos;t have an account?
             <Link href={"/register"} className="hover:underline dark:text-[#F59E0B] font-bold">
               Sign Up</Link>.
           </p>

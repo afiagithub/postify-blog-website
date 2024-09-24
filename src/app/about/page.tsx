@@ -1,10 +1,8 @@
 import Image from "next/image";
 import aboutImg from "@/../../public/about.jpg"
-import { getServerSession } from "next-auth";
-import { authOption } from "../api/auth/[...nextauth]/route";
 
 const About = async () => {
-    const session = await getServerSession(authOption);
+    // const session = await getServerSession(authOption);
     // console.log(session);
     
     return (
@@ -19,10 +17,10 @@ const About = async () => {
                             <span className="text-[#ff494a] font-bold"> TourifyNow </span>
                             where we believe that travel has the power to transform lives, broaden horizons, 
                             and create lasting memories. Founded by a team of passionate globetrotters, 
-                            TourifyNow is more than just a travel website – it's a community of like-minded 
+                            TourifyNow is more than just a travel website – it&apos;s a community of like-minded 
                             adventurers united by a shared love for exploration and discovery. With our extensive 
                             network of trusted partners, expert travel consultants, and curated selection of 
-                            destinations, we're here to turn your travel dreams into reality.</p>
+                            destinations, we&apos;re here to turn your travel dreams into reality.</p>
                     </div>
                 </div>
             </div>

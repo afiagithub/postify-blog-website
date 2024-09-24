@@ -1,19 +1,18 @@
 "use client"
-import React, { useState } from 'react'
-import DatePicker from "react-datepicker";
+import React from 'react'
 import "react-datepicker/dist/react-datepicker.css";
-import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 
 const CreateBlog = () => {
     const session = useSession();
-    const [startDate, setStartDate] = useState(new Date());
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleAdd = async (event: any) => {
         event.preventDefault();
         const form = event.target;
         const title = form.title.value;
+        const date = form.date.value;
         const category = form.category.value;
         const tags = form.tags.value;
         const image = form.image.value;
@@ -25,7 +24,8 @@ const CreateBlog = () => {
             category,
             trending: false,
             sponsored: false,
-            post_date: moment(startDate).format('YYYY-MM-DD'),
+            post_date: date,
+            // post_date: moment(startDate).format('YYYY-MM-DD'),
             author_name: session?.data?.user?.name,
             author_email: session?.data?.user?.email,
             author_image: session?.data?.user?.image || 'https://i.ibb.co.com/QnTrVRz/icon.jpg',
@@ -67,10 +67,13 @@ const CreateBlog = () => {
 
                     <div>
                         <label className="block mb-2 text-sm text-gray-600 ">Date</label>
-                        <DatePicker name="updatedDate"
+                        <input name="date" type="text" placeholder="Enter Date(YYYY-MM-DD)"
+                            className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 
+                                bg-white border border-gray-200 rounded-lg" />
+                        {/* <DatePicker name="updatedDate"
                             className='block w-full px-5 py-3 text-gray-700 placeholder-gray-400 
                                 bg-white border border-gray-200 rounded-lg'
-                            selected={startDate} onChange={(date) => setStartDate(date)} />
+                            selected={startDate} onChange={(date) => setStartDate(date)} /> */}
                     </div>
 
                     <div>

@@ -43,7 +43,7 @@ const Blogs = async () => {
         }
         <div className='w-2/6'>
           {
-            blogs.length > 0 && blogs.slice(1, 4).map(blog => <BlogCard key={blog} data={blog}></BlogCard>)
+            blogs.length > 0 && blogs.slice(1, 4).map((blog: Blog) => <BlogCard key={blog._id} data={blog}></BlogCard>)
           }
         </div>
       </div>

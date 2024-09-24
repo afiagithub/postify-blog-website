@@ -60,7 +60,7 @@ const Navbar = () => {
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                                <Image src={session?.data?.user?.image} alt={session?.data?.user?.name}
+                                <Image src={session?.data?.user?.image || ''} alt={session?.data?.user?.name || 'John Doe'}
                                     height={50} width={50} className='rounded-full'></Image>
                             </div>
                         </div>

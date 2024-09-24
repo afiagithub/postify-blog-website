@@ -9,6 +9,7 @@ const SocialLogin = () => {
     const router = useRouter();
     const session = useSession();
     const handleSocialLogin = async (provider: string) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const res = await signIn(provider, { redirect: false })
     }
     if (session.status === "authenticated") {
