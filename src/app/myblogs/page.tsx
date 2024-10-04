@@ -1,5 +1,6 @@
 "use client"
 import { useSession } from 'next-auth/react'
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { FaRegEdit } from "react-icons/fa";
@@ -20,7 +21,7 @@ const MyBlogPage = () => {
     const session = useSession();
     const [blogList, setBlogList] = useState([])
     const getMyBlogs = async () => {
-        const res = await fetch(`https://postify-blog-website.vercel.app/myblogs/api/${session?.data?.user?.email}`)
+        const res = await fetch(`http://localhost:3000/myblogs/api/${session?.data?.user?.email}`)
         const data = await res.json();
         console.log(data?.myBlogs);
 
@@ -32,7 +33,7 @@ const MyBlogPage = () => {
     }, [session])
 
     const handleDelete = async (id: string) => {
-        const res = await fetch(`https://postify-blog-website.vercel.app/myblogs/api/deleteblog/${id}`)
+        const res = await fetch(`http://localhost:3000/myblogs/api/deleteblog/${id}`)
         console.log(res);
         if(res.status === 200){
             toast.success("Hurrah")
@@ -59,7 +60,7 @@ const MyBlogPage = () => {
                         {
                             blogList?.map((blog: Blog) => <tr key={blog._id}>
                                 <td>
-                                    <img src={blog.thumbnail} className="rounded-2xl w-16 h-16 object-center" />
+                                    <Image width={20} height={20} src={blog.thumbnail} alt='Thumbnail' className="rounded-2xl w-16 h-16 object-center" />
                                 </td>
                                 <td>
                                     <div className="flex items-center gap-3">
@@ -71,7 +72,7 @@ const MyBlogPage = () => {
                                 <td>{blog.post_date}</td>
                                 <td>{blog.category}</td>
                                 <th>
-                                    <Link href={`/dashboard/update-blog/${blog._id}`} className="btn bg-[#4796c899] border-2 border-transparent text-[#2D3663] font-black text-lg 
+                                    <Link href={`/myblogs/${blog._id}`} className="btn bg-[#4796c899] border-2 border-transparent text-[#2D3663] font-black text-lg 
                                     hover:bg-transparent hover:border-[#2D3663]">
                                         <FaRegEdit />
                                     </Link>

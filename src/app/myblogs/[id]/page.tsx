@@ -1,14 +1,37 @@
-"use client"
-import React from 'react'
-import "react-datepicker/dist/react-datepicker.css";
+'use client'
 import { useSession } from 'next-auth/react';
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 
-const CreateBlog = () => {
+interface IBlog {
+    _id?: string;
+    title?: string;
+    thumbnail?: string;
+    post_date?: string;
+    category?: string;
+    blog_content?: string;
+    tags?: string[];
+    comment_count?: number;
+}
+
+const UpdateBlog = ({ params }: { params: { id: string } }) => {
     const session = useSession();
 
+    const [blogData, setBlogData] = useState<IBlog>({});
+
+    const getBlogDetails = async () => {
+        const res = await fetch(`http://localhost:3000/blogs/api/${params.id}`)
+        const data = await res.json();
+        console.log(data?.blog);
+        setBlogData(data.blog)
+    }
+
+    useEffect(() => {
+        getBlogDetails()
+    }, [params.id])
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleAdd = async (event: any) => {
+    const handleUpdate = async (event: any) => {
         event.preventDefault();
         const form = event.target;
         const title = form.title.value;
@@ -18,68 +41,60 @@ const CreateBlog = () => {
         const image = form.image.value;
         const blog_content = form.blog_content.value;
 
-        const newBlogData = {
+        const updatedBlogData = {
             title,
             thumbnail: image,
             category,
             trending: false,
             sponsored: false,
             post_date: date,
-            // post_date: moment(startDate).format('YYYY-MM-DD'),
             author_name: session?.data?.user?.name,
             author_email: session?.data?.user?.email,
             author_image: session?.data?.user?.image || 'https://i.ibb.co.com/QnTrVRz/icon.jpg',
-            comment_count: 0,
+            comment_count: blogData.comment_count,
             tags: tags.split(","),
             blog_content,
         }
         // console.log(newBlogData);
 
-        const res = await fetch('http://localhost:3000/blogs/api/create-post', {
-            method: 'POST',
-            body: JSON.stringify(newBlogData),
+        const res = await fetch(`http://localhost:3000/myblogs/api/updateblog/${params.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(updatedBlogData),
             headers: {
                 "content-type": "application/json"
             }
         })
         if(res.status === 200){
-            toast.success('Blog Posted Successfully')
+            toast.success('Blog Updated Successfully')
         }
     }
+
     return (
         <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
             <div className="w-full">
                 <h1 className="text-3xl font-bold font-robo tracking-wider capitalize ">
-                    Create a new blog
+                    Update your blog details
                 </h1>
-                <p className="mt-4 text-[#6B7280]">
-                    Add a test, including details like dates, slots, and descriptions,
-                    to reflect the latest offerings and ensure seamless patient experience.
-                </p>
 
-                <form onSubmit={handleAdd} className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
+                <form onSubmit={handleUpdate} className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
                     <div>
                         <label className="block mb-2 text-sm text-gray-600 ">Title</label>
-                        <input name="title" type="text" placeholder="Enter Blog Title"
+                        <input name="title" type="text" defaultValue={blogData.title}
                             className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 
                                 bg-white border border-gray-200 rounded-lg" />
                     </div>
 
                     <div>
                         <label className="block mb-2 text-sm text-gray-600 ">Date</label>
-                        <input name="date" type="text" placeholder="Enter Date(YYYY-MM-DD)"
+                        <input name="date" type="text" defaultValue={blogData.post_date}
                             className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 
                                 bg-white border border-gray-200 rounded-lg" />
-                        {/* <DatePicker name="updatedDate"
-                            className='block w-full px-5 py-3 text-gray-700 placeholder-gray-400 
-                                bg-white border border-gray-200 rounded-lg'
-                            selected={startDate} onChange={(date) => setStartDate(date)} /> */}
                     </div>
 
                     <div>
                         <label className="block mb-2 text-sm text-gray-600 ">Category</label>
-                        <select name="category" id="" className='block w-full px-3 py-3 mt-2 text-gray-700 placeholder-gray-400 
-                                bg-white border border-gray-200 rounded-lg'>
+                        <select name="category" className='block w-full px-3 py-3 mt-2 text-gray-700 placeholder-gray-400 
+                                bg-white border border-gray-200 rounded-lg' value={blogData.category}>
                             <option value="Technology">Technology</option>
                             <option value="Lifestyle">Lifestyle</option>
                             <option value="Health">Health</option>
@@ -91,31 +106,31 @@ const CreateBlog = () => {
 
                     <div>
                         <label className="block mb-2 text-sm text-gray-600 ">Tags (divide them with comma)</label>
-                        <input name="tags" type="string" placeholder="Enter Tags"
+                        <input name="tags" type="string" defaultValue={blogData.tags}
                             className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 
                                 bg-white border border-gray-200 rounded-lg" />
                     </div>
 
                     <div className="col-span-2">
-                        <label className="block mb-2 text-sm text-gray-600 ">Photo URL</label>
-                        <input name="image" placeholder="Enter image URL" type="url"
+                        <label className="block mb-2 text-sm text-gray-600 ">Blog Thumbnail</label>
+                        <input name="image" defaultValue={blogData.thumbnail} type="url"
                             className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 
                                 bg-white border border-gray-200 rounded-lg " />
                     </div>
 
                     <div className="col-span-2">
                         <label className="block mb-2 text-sm text-gray-600 ">Blog Content</label>
-                        <textarea name="blog_content" rows={5} placeholder="Enter Blog Content"
+                        <textarea name="blog_content" rows={5} value={blogData.blog_content}
                             className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 
                                     bg-white border border-gray-200 rounded-lg"></textarea>
                     </div>
                     <button className="btn col-span-2 bg-[#F59E0B] text-[#1F2937] text-lg font-semibold rounded-xl 
                             border-2 border-transparent hover:border-[#F59E0B] hover:bg-transparent 
-                            hover:text-[#F59E0B]">Post New Blog</button>
+                            hover:text-[#F59E0B]">Update Blog Details</button>
                 </form>
             </div>
         </div>
     )
 }
 
-export default CreateBlog
+export default UpdateBlog
