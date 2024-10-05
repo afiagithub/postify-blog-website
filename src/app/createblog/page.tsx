@@ -35,7 +35,7 @@ const CreateBlog = () => {
         }
         // console.log(newBlogData);
 
-        const res = await fetch('http://localhost:3000/blogs/api/create-post', {
+        const res = await fetch('https://postify-blog-website.vercel.app/blogs/api/create-post', {
             method: 'POST',
             body: JSON.stringify(newBlogData),
             headers: {

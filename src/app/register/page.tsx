@@ -44,7 +44,7 @@ const SignUp = () => {
             image,
             password
         }
-        const res = await fetch('http://localhost:3000/register/api', {
+        const res = await fetch('https://postify-blog-website.vercel.app/register/api', {
             method: 'POST',
             body: JSON.stringify(newUser),
             headers: {

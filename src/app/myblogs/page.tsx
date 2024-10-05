@@ -21,7 +21,7 @@ const MyBlogPage = () => {
     const session = useSession();
     const [blogList, setBlogList] = useState([])
     const getMyBlogs = async () => {
-        const res = await fetch(`http://localhost:3000/myblogs/api/${session?.data?.user?.email}`)
+        const res = await fetch(`https://postify-blog-website.vercel.app/myblogs/api/${session?.data?.user?.email}`)
         const data = await res.json();
         console.log(data?.myBlogs);
 
@@ -33,7 +33,7 @@ const MyBlogPage = () => {
     }, [session])
 
     const handleDelete = async (id: string) => {
-        const res = await fetch(`http://localhost:3000/myblogs/api/deleteblog/${id}`)
+        const res = await fetch(`https://postify-blog-website.vercel.app/myblogs/api/deleteblog/${id}`)
         console.log(res);
         if(res.status === 200){
             toast.success("Hurrah")

@@ -20,7 +20,7 @@ const UpdateBlog = ({ params }: { params: { id: string } }) => {
     const [blogData, setBlogData] = useState<IBlog>({});
 
     const getBlogDetails = async () => {
-        const res = await fetch(`http://localhost:3000/blogs/api/${params.id}`)
+        const res = await fetch(`https://postify-blog-website.vercel.app/blogs/api/${params.id}`)
         const data = await res.json();
         console.log(data?.blog);
         setBlogData(data.blog)
@@ -57,7 +57,7 @@ const UpdateBlog = ({ params }: { params: { id: string } }) => {
         }
         // console.log(newBlogData);
 
-        const res = await fetch(`http://localhost:3000/myblogs/api/updateblog/${params.id}`, {
+        const res = await fetch(`https://postify-blog-website.vercel.app/myblogs/api/updateblog/${params.id}`, {
             method: 'PUT',
             body: JSON.stringify(updatedBlogData),
             headers: {
